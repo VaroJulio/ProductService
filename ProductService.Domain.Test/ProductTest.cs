@@ -74,5 +74,12 @@ namespace ProductService.Domain.Test
 
             Assert.Null(newProduct);
         }
+
+        [Theory]
+        [InlineData("Cheese", 5, "Keep into the freezer", 11.58, false)]
+        public void Should_Update_A_Product(string name, int stock, string description, decimal price, bool status)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
