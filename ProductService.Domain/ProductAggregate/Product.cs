@@ -1,4 +1,6 @@
-﻿namespace ProductService.Domain.ProductAggregate
+﻿using Ardalis.GuardClauses;
+
+namespace ProductService.Domain.ProductAggregate
 {
     public class Product
     {
@@ -15,12 +17,12 @@
             Description = string.Empty;
         }
 
-        public Product(string name, int stock, string description, decimal price) 
+        public Product(string name, int stock, string description, decimal price)
         {
-            Name = name;
-            Stock = stock;
-            Description = description;
-            Price = price;
+            Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
+            Stock = Guard.Against.Negative(stock, nameof(stock));
+            Description = Guard.Against.NullOrWhiteSpace(description, nameof(description)); ;
+            Price = Guard.Against.Negative(Guard.Against.Zero(price, nameof(price)), nameof(price));
             Status = true;
         }
     }
