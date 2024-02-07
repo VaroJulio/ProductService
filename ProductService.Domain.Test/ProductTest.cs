@@ -45,5 +45,13 @@ namespace ProductService.Domain.Test
                 Assert.Equal(price, newProduct.Price);
             });
         }
+
+        [Theory]
+        [InlineData(null, 5, null, 3)]
+        [InlineData("", -700, "     ", -856.52)]
+        public void Should_Not_Create_A_Product_Using_Parameters(string? name, int stock, string? description, decimal price)
+        {
+           throw new NotImplementedException();
+        }
     }
 }
