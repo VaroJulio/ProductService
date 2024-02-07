@@ -1,3 +1,5 @@
+using ProductService.Domain.ProductAggregate;
+
 namespace ProductService.Domain.Test
 {
     public class ProductTest
@@ -5,7 +7,15 @@ namespace ProductService.Domain.Test
         [Fact]
         public void Should_Create_A_Product_Using_Default_Ctr()
         {
-            throw new NotImplementedException();
+            Product newProduct;
+
+            newProduct = new Product();
+
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(newProduct);
+                Assert.IsType<Product>(newProduct);
+            });
         }
     }
 }
