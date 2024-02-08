@@ -5,6 +5,8 @@ namespace ProductService.Domain.Test
 {
     public class ProductTest
     {
+        private readonly decimal testPrice = decimal.Parse("89.45263");
+
         [Fact]
         public void Should_Create_A_Product_Using_Default_Ctr()
         {
@@ -75,11 +77,36 @@ namespace ProductService.Domain.Test
             Assert.Null(newProduct);
         }
 
+
         [Theory]
-        [InlineData("Cheese", 5, "Keep into the freezer", 11.58, false)]
-        public void Should_Update_A_Product(string name, int stock, string description, decimal price, bool status)
+        [InlineData("Juan Valdez Cofee", 5, "The best cofee", "18.759",  false)]
+        [InlineData(null, 5, "The best cofee", "18.759", false)]
+        [InlineData("Juan Valdez Cofee", null, "The best cofee", "18.759", false)]
+        [InlineData("Juan Valdez Cofee", 5, null, "18.759", false)]
+        [InlineData("Juan Valdez Cofee", 5, "The best cofee", null, false)]
+        [InlineData("Juan Valdez Cofee", 5, "The best cofee", "18.759", null)]
+        [InlineData(null, null, null, null, null)]
+        public void Should_Update_A_Product(string? name, int? stock, string? description, string? price, bool? status)
         {
-            throw new NotImplementedException();
+            var newProduct = new Product("A", 1, "A", 1);
+            
+            newProduct.Update(name, stock, description, (price != null) ? decimal.Parse(price) : null, status);
+
+            Assert.Multiple(() =>
+            { 
+                Assert.Equal(default, newProduct.ProductId);
+
+                if (name is not null)                   
+                    Assert.Equal(name, newProduct.Name);
+                if (stock is not null)
+                    Assert.Equal(stock, newProduct.Stock);
+                if (description is not null)
+                    Assert.Equal(description, newProduct.Description);
+                if (price is not null)
+                    Assert.Equal(decimal.Parse(price), newProduct.Price);
+                if (status is not null)
+                    Assert.True(status == newProduct.Status);
+            });
         }
     }
 }

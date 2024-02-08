@@ -25,5 +25,14 @@ namespace ProductService.Domain.ProductAggregate
             Price = Guard.Against.Negative(Guard.Against.Zero(price, nameof(price)), nameof(price));
             Status = true;
         }
+
+        public void Update(string? name, int? stock, string? description, decimal? price, bool? status)
+        {
+            Name = name ?? Name;
+            Stock = stock ?? Stock;    
+            Description = description ?? Description;
+            Price = price ?? Price;
+            Status = status ?? Status;
+        }
     }
 }
