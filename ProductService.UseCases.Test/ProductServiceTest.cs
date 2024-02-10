@@ -47,7 +47,7 @@ namespace ProductService.UseCases.Test
             var updatedProductDto = automapper.Map<ProductDto>(updatedProduct);
             var productRepositoryMock = new Mock<IRepository<Product>>();
             productRepositoryMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<ISpecification<Product>>(), default)).Returns(Task.FromResult(updatedProduct)!);
-            productRepositoryMock.Setup(x => x.UpdateAsync(updatedProduct, default)).Returns(Task.FromResult(updatedProduct));          
+            productRepositoryMock.Setup(x => x.UpdateAsync(updatedProduct, default)).Returns(Task.FromResult(updatedProduct));
             var productService = new ProductService(productRepositoryMock.Object, automapper);
 
             var result = await productService.UpdateProductAsync(updateProductDto, default);
@@ -59,6 +59,12 @@ namespace ProductService.UseCases.Test
                 Assert.Equal(updatedProductDto, result);
             });
 
+        }
+
+        [Theory, AutoData]
+        public async Task Should_Get_Product_By_Id_Async(int productId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
