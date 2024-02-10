@@ -8,9 +8,10 @@ namespace ProductService.UseCases.Mappers
     {
         public UseCasesProfileMapper() 
         {
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product?, ProductDto?>().ReverseMap();
             CreateMap<CreateProductDto, Product>();
             CreateMap<CreateProductDto, ProductDto>();
+            CreateMap<Product, UpdateProductDto>().ReverseMap();
         }
     }
 }

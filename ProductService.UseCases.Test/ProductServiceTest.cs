@@ -1,3 +1,4 @@
+using Ardalis.Specification;
 using AutoFixture.Xunit2;
 using AutoMapper;
 using Moq;
@@ -41,7 +42,23 @@ namespace ProductService.UseCases.Test
         [Theory, AutoData]
         public async Task Should_Update_ProductAsync(UpdateProductDto updateProductDtoMock)
         {
-            throw new NotImplementedException();
+            var updatedProduct = automapper.Map<Product>(updateProductDtoMock);
+            var updateProductDto = automapper.Map<UpdateProductDto>(updatedProduct);
+            var updatedProductDto = automapper.Map<ProductDto>(updatedProduct);
+            var productRepositoryMock = new Mock<IRepository<Product>>();
+            productRepositoryMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<ISpecification<Product>>(), default)).Returns(Task.FromResult(updatedProduct)!);
+            productRepositoryMock.Setup(x => x.UpdateAsync(updatedProduct, default)).Returns(Task.FromResult(updatedProduct));          
+            var productService = new ProductService(productRepositoryMock.Object, automapper);
+
+            var result = await productService.UpdateProductAsync(updateProductDto, default);
+
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(result);
+                Assert.IsType<ProductDto>(result);
+                Assert.Equal(updatedProductDto, result);
+            });
+
         }
     }
 }
