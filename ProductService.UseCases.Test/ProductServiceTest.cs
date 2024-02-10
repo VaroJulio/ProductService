@@ -37,5 +37,11 @@ namespace ProductService.UseCases.Test
                 Assert.Equal(newProductDto, result);
             });
         }
+
+        [Theory, AutoData]
+        public async Task Should_Update_ProductAsync(UpdateProductDto updateProductDtoMock)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
