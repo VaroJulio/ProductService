@@ -1,8 +1,9 @@
 ﻿using Ardalis.GuardClauses;
+using SharedKernel.Interfaces;
 
 namespace ProductService.Domain.ProductAggregate
 {
-    public class Product
+    public class Product : IAggregateRoot
     {
         public int ProductId { get; set; }
         public string Name { get; set; }
