@@ -1,17 +1,16 @@
-﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using ProductService.Infrastructure.Cache;
+﻿using Microsoft.Extensions.Logging;
+using ProductService.UseCases.Interfaces;
 
-namespace ProductService.Infrastructure.IHostedServices
+namespace ProductService.Infrastructure.HostedServices
 {
-    internal class CacheTimedHostedService : IHostedService, IDisposable
+    public class CacheTimedHostedService : IHostedServiceWithExecutionCount, IDisposable
     {
         private int executionCount = 0;
         private readonly ILogger<CacheTimedHostedService> _logger;
         private Timer? _timer = null;
-        private readonly ProductStatusCache productStatusCache;
+        private readonly IProductStatusCache productStatusCache;
 
-        public CacheTimedHostedService(ILogger<CacheTimedHostedService> logger, ProductStatusCache productStatusCache)
+        public CacheTimedHostedService(ILogger<CacheTimedHostedService> logger, IProductStatusCache productStatusCache)
         {
             _logger = logger;
             this.productStatusCache = productStatusCache;
@@ -45,6 +44,8 @@ namespace ProductService.Infrastructure.IHostedServices
 
             return Task.CompletedTask;
         }
+
+        public Task<int> GetExecutionCount() => Task.FromResult(executionCount);
 
         public void Dispose()
         {
