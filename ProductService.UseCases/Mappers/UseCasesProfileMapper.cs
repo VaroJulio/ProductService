@@ -12,6 +12,7 @@ namespace ProductService.UseCases.Mappers
             CreateMap<CreateProductDto, Product>();
             CreateMap<CreateProductDto, ProductDto>();
             CreateMap<Product, UpdateProductDto>().ReverseMap();
+            CreateMap<Product?, DetailedProductDto?>();
         }
     }
 }

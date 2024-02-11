@@ -12,7 +12,10 @@ namespace ProductService.Domain.ProductAggregate
         public string Description { get; set; }
         public decimal Price { get; set; }
 
-        public Product() 
+        private string StatusName = string.Empty;
+        private decimal Discount = 0;
+
+        public Product()
         {
             Name = string.Empty;
             Description = string.Empty;
@@ -30,10 +33,16 @@ namespace ProductService.Domain.ProductAggregate
         public void Update(string? name, int? stock, string? description, decimal? price, bool? status)
         {
             Name = name ?? Name;
-            Stock = stock ?? Stock;    
+            Stock = stock ?? Stock;
             Description = description ?? Description;
             Price = price ?? Price;
             Status = status ?? Status;
         }
+
+        public void SetStatusName(string statusName) => StatusName = statusName;
+        public void SetDiscount(decimal discount) => Discount = discount;
+        public string GetStatusName() => StatusName;
+        public decimal GetDiscount() => Discount;
+        public decimal CalculateFinalPrice() => Price * (100 - Discount) / 100;
     }
 }

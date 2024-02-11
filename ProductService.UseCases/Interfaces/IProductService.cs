@@ -6,6 +6,6 @@ namespace ProductService.UseCases.Interfaces
     {
         Task<ProductDto> CreateProductAsync(CreateProductDto createProductDto, CancellationToken cancellationToken);
         Task<ProductDto?> UpdateProductAsync(UpdateProductDto updateProductDto, CancellationToken cancellationToken);
-        Task<IEnumerable<DetailedProductDto>> GetProductByIdAsync(int productId, CancellationToken cancellationToken);
+        Task<DetailedProductDto?> GetProductByIdAsync(int productId, CancellationToken cancellationToken);
     }
 }
