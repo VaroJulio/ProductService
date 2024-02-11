@@ -47,9 +47,6 @@ namespace ProductService.Infrastructure.HostedServices
 
         public Task<int> GetExecutionCount() => Task.FromResult(executionCount);
 
-        public void Dispose()
-        {
-            _timer?.Dispose();
-        }
+        public void Dispose() => _timer?.Dispose();
     }
 }

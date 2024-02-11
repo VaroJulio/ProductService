@@ -5,8 +5,6 @@ namespace ProductService.Domain.Test
 {
     public class ProductTest
     {
-        private readonly decimal testPrice = decimal.Parse("89.45263");
-
         [Fact]
         public void Should_Create_A_Product_Using_Default_Ctr()
         {

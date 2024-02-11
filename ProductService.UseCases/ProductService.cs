@@ -41,7 +41,7 @@ namespace ProductService.UseCases
             try
             {
                 DetailedProductDto? detailedProduct = default;
-                GetProductByIdSpec spec = new GetProductByIdSpec(productId);
+                GetProductByIdSpec spec = new(productId);
                 var product = await repository.FirstOrDefaultAsync(spec, cancellationToken);
 
                 if (product is not null)
@@ -73,8 +73,8 @@ namespace ProductService.UseCases
         {
             try
             {
-                GetProductByIdSpec spec = new GetProductByIdSpec(updateProductDto.ProductId);
-                var product = await repository.FirstOrDefaultAsync(spec);
+                GetProductByIdSpec spec = new(updateProductDto.ProductId);
+                var product = await repository.FirstOrDefaultAsync(spec, default);
 
                 if (product is not null)
                 {

@@ -39,10 +39,7 @@ namespace ProductService.Infrastructure.Test
             if (productStatusCacheService is not null)
                 await productStatusCacheService.GetProductStatusFromCacheOrCreateAsync();
 
-            if (hostedService is not null)
-            {
-               hostedService.GetExecutionCount().Result.Should().Be(1);
-            }
+            hostedService?.GetExecutionCount().Result.Should().Be(1);
 
             if (productStatusCacheService is not null)
             {

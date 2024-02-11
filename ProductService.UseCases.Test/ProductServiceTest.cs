@@ -14,7 +14,7 @@ namespace ProductService.UseCases.Test
     public class ProductServiceTest
     {
         private readonly IMapper automapper;
-        private MapperConfiguration mapperConfiguration;
+        private readonly MapperConfiguration mapperConfiguration;
 
         public ProductServiceTest()
         {
