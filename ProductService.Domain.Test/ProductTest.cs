@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using FluentAssertions;
 using ProductService.Domain.ProductAggregate;
 
@@ -55,7 +56,8 @@ namespace ProductService.Domain.Test
         [InlineData("custom name", -700, "custom description", 3)]
         [InlineData("custom name", 5, "custom description", -856.52)]
         [InlineData("custom name", 5, "custom description", 0)]
-        public void Should_Not_Create_A_Product_Using_Wrong_Parameters_Values(string? name, int stock, string? description, decimal price)
+        public void Should_Not_Create_A_Product_Using_Wrong_Parameters_Values(string? name, int stock,
+            string? description, decimal price)
         {
             Product? newProduct = null;
 
@@ -77,7 +79,7 @@ namespace ProductService.Domain.Test
 
 
         [Theory]
-        [InlineData("Juan Valdez Cofee", 5, "The best cofee", "18.759",  false)]
+        [InlineData("Juan Valdez Cofee", 5, "The best cofee", "18.759", false)]
         [InlineData(null, 5, "The best cofee", "18.759", false)]
         [InlineData("Juan Valdez Cofee", null, "The best cofee", "18.759", false)]
         [InlineData("Juan Valdez Cofee", 5, null, "18.759", false)]
@@ -87,14 +89,14 @@ namespace ProductService.Domain.Test
         public void Should_Update_A_Product(string? name, int? stock, string? description, string? price, bool? status)
         {
             var newProduct = new Product("A", 1, "A", 1);
-            
+
             newProduct.Update(name, stock, description, (price != null) ? decimal.Parse(price) : null, status);
 
             Assert.Multiple(() =>
-            { 
+            {
                 Assert.Equal(default, newProduct.ProductId);
 
-                if (name is not null)                   
+                if (name is not null)
                     Assert.Equal(name, newProduct.Name);
                 if (stock is not null)
                     Assert.Equal(stock, newProduct.Stock);
@@ -104,6 +106,68 @@ namespace ProductService.Domain.Test
                     Assert.Equal(decimal.Parse(price), newProduct.Price);
                 if (status is not null)
                     Assert.True(status == newProduct.Status);
+            });
+        }
+
+        [Theory, AutoData]
+        public void Should_Set_And_Get_StatusName(string name, int stock, string description, decimal price, string statusName)
+        {
+            var newProduct = new Product(name, stock, description, price);
+
+            newProduct.SetStatusName(statusName);
+            var storedStatusName = newProduct.GetStatusName();
+
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(newProduct);
+                Assert.IsType<Product>(newProduct);
+            });
+
+            Assert.Multiple(() =>
+            {
+                Assert.Equal(statusName, storedStatusName);
+            });
+        }
+
+        [Theory, AutoData]
+        public void Should_Set_And_Get_Discount(string name, int stock, string description, decimal price, decimal discount)
+        {
+            var newProduct = new Product(name, stock, description, price);
+
+            newProduct.SetDiscount(discount);
+            var storedDiscount = newProduct.GetDiscount();
+
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(newProduct);
+                Assert.IsType<Product>(newProduct);
+            });
+
+            Assert.Multiple(() =>
+            {
+                Assert.Equal(discount, storedDiscount);
+            });
+        }
+
+        [Theory, AutoData]
+        public void Should_Calculate_FinalPrice(string name, int stock, string description, decimal price,
+            string statusName, decimal discount)
+        {
+            var newProduct = new Product(name, stock, description, price);
+
+            newProduct.SetStatusName(statusName);
+            newProduct.SetDiscount(discount);
+            var finalPrice = newProduct.CalculateFinalPrice();
+
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(newProduct);
+                Assert.IsType<Product>(newProduct);
+            });
+
+            Assert.Multiple(() =>
+            {
+                Assert.Equal(price * (100 - discount) / 100, finalPrice);
             });
         }
     }
