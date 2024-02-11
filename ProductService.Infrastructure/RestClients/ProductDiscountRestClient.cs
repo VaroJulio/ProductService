@@ -5,7 +5,7 @@ using RestSharp;
 
 namespace ProductService.Infrastructure.RestClients
 {
-    internal class ProductDiscountRestClient : IProductDiscountRestClient
+    public class ProductDiscountRestClient : IProductDiscountRestClient
     {
         private readonly IRestClient restClient;
         private readonly IConfiguration configuration;
@@ -13,7 +13,7 @@ namespace ProductService.Infrastructure.RestClients
         public ProductDiscountRestClient(IConfiguration config)
         {
             configuration = config;
-            var baseUrl = config["GetPRoductDiscountUrl"];
+            var baseUrl = config["GetProductDiscountUrl"];
             var options = new RestClientOptions("https://65c7e9aee7c384aada6f1485.mockapi.io/");
             restClient = new RestClient(options);
         }
