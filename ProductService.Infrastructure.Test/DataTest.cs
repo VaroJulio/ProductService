@@ -18,11 +18,14 @@ namespace ProductService.Infrastructure.Test
         public async Task Should_Add_Product_To_Db(Product product)
         {
             IRepository<Product> productRespotitory = new EfRepository<Product>(DbContext);
-            
+
             var result = await productRespotitory.AddAsync(product);
-            
-            Assert.NotNull(result);
-            Assert.Equal(1, DbContext.Products.Count());
+
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(result);
+                Assert.Equal(1, DbContext.Products.Count());
+            });
         }
 
         [Theory, AutoData]
@@ -32,10 +35,13 @@ namespace ProductService.Infrastructure.Test
             
             var newProductResult = await productRespotitory.AddAsync(product);
             var getProductByIdResult = await productRespotitory.GetByIdAsync(product.ProductId);
-            
-            Assert.NotNull(getProductByIdResult);
-            Assert.Equal(newProductResult, getProductByIdResult);
-            Assert.Equal(1, DbContext.Products.Count());
+
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(getProductByIdResult);
+                Assert.Equal(newProductResult, getProductByIdResult);
+                Assert.Equal(1, DbContext.Products.Count());
+            });
         }
 
         [Theory, AutoData]
@@ -50,13 +56,33 @@ namespace ProductService.Infrastructure.Test
             await productRespotitory.UpdateAsync(getProductByIdResult);
             getProductByIdResult = await productRespotitory.GetByIdAsync(newProduct.ProductId);
 
-            Assert.NotNull(getProductByIdResult);
-            Assert.Equal(name, getProductByIdResult.Name);
-            Assert.Equal(stock, getProductByIdResult.Stock);
-            Assert.Equal(description, getProductByIdResult.Description);
-            Assert.Equal(price, getProductByIdResult.Price);
-            Assert.Equal(status, getProductByIdResult.Status);
-            Assert.Equal(1, DbContext.Products.Count());
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(getProductByIdResult);
+                Assert.Equal(name, getProductByIdResult.Name);
+                Assert.Equal(stock, getProductByIdResult.Stock);
+                Assert.Equal(description, getProductByIdResult.Description);
+                Assert.Equal(price, getProductByIdResult.Price);
+                Assert.Equal(status, getProductByIdResult.Status);
+                Assert.Equal(1, DbContext.Products.Count());
+            });
+        }
+
+        [Theory, AutoData]
+        public async Task Should_Filter_By_Id_Usig_Specification_In_Db(Product product)
+        {
+            IRepository<Product> productRespotitory = new EfRepository<Product>(DbContext);
+            GetProductByIdSpec spec = new(product.ProductId);
+            
+            var newProductResult = await productRespotitory.AddAsync(product);
+            var getProductByIdResult = await productRespotitory.FirstOrDefaultAsync(spec, default);
+
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(getProductByIdResult);
+                Assert.Equal(newProductResult, getProductByIdResult);
+                Assert.Equal(1, DbContext.Products.Count());
+            });
         }
     }
 }
