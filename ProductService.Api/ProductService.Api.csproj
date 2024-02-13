@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\ProductEndpoints\GetById\" />
+    <Folder Include="Endpoints\ProductEndpoints\Update\" />
   </ItemGroup>
 
 </Project>

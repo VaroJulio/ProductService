@@ -40,7 +40,7 @@ namespace ProductService.UseCases
         {
             try
             {
-                DetailedProductDto? detailedProduct = default;
+                DetailedProductDto? detailedProduct = null;
                 GetProductByIdSpec spec = new(productId);
                 var product = await repository.FirstOrDefaultAsync(spec, cancellationToken);
 
