@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-
-namespace ProductService.UseCases.Interfaces
+﻿namespace ProductService.UseCases.Interfaces
 {
     public interface IProductStatusCache
     {
