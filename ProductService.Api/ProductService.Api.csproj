@@ -29,8 +29,4 @@
     <ProjectReference Include="..\ProductService.Infrastructure\ProductService.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Endpoints\ProductEndpoints\Update\" />
-  </ItemGroup>
-
 </Project>

@@ -16,7 +16,7 @@ namespace ProductService.Api.Endpoints.ProductEndpoints.GetById
 
         public override void Configure()
         {
-            Post(GetByIdProductRequest.Route);
+            Get(GetByIdProductRequest.Route);
             Options(x => x.WithTags("ProductEndpoints"));
         }
 
@@ -24,7 +24,7 @@ namespace ProductService.Api.Endpoints.ProductEndpoints.GetById
         {
             var result = await productService.GetProductByIdAsync(request.Id, cancellationToken);     
             if (result is null) { await SendNotFoundAsync(cancellationToken); return; }
-            var getByIdProductResponse = getByIdProductMapper.Map<GetByIdProductResponse>(result);
+            var getByIdProductResponse = getByIdProductMapper.Map<GetByIdProductResponse?>(result);
             await SendOkAsync(getByIdProductResponse, cancellationToken);
         }
     }

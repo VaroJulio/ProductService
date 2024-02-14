@@ -8,7 +8,7 @@ namespace ProductService.Api.Endpoints.ProductEndpoints.GetById
 
         public GetByIdProductMapper()
         {
-            CreateMap<DetailedProductDto, GetByIdProductResponse>();
+            CreateMap<DetailedProductDto?, GetByIdProductResponse?>();
         }
     }
 }
