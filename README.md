@@ -6,9 +6,13 @@ Service to manage a master of products for testing purposes.
 ## How to run the project
 Browse to the PeoductService.Api folder. Ensure you are in the same level of the file ProductService.Api.csproj. If you verifid the previous steps, now continue opening a system console in the mentioned folder and execute the following commands:
 
+```
 dotnet build
+```
 
+```
 dotnet run
+```
 
 Then, go to the [link](http://localhost:5217/swagger/index.html) 
 
