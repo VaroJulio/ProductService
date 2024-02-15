@@ -8,13 +8,13 @@ Browse to the PeoductService.Api folder. Ensure you are in the same level of the
 
 ```
 dotnet build
-```
-
-```
+ ```
+ ```
 dotnet run
 ```
 
 Then, go to the [link](http://localhost:5217/swagger/index.html) 
+
 
 ## Architecture Used
 
