@@ -1,0 +1,12 @@
+2024-02-14 21:49:14.421 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DQ2JDE2RB:00000005 took 308 ms.
+2024-02-14 21:50:05.103 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DQ2JDE2RB:00000006 took 46 ms.
+2024-02-14 22:27:03.144 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DQNNMASAB:00000005 took 374 ms.
+2024-02-14 22:28:52.622 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DQOQRLP2H:00000003 took 266 ms.
+2024-02-14 22:31:34.225 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DQQ791VJC:00000005 took 291 ms.
+2024-02-14 22:37:52.987 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DQTOF5S6I:00000005 took 313 ms.
+2024-02-14 22:42:11.900 -05:00 [INF] request to: HTTP: POST /api/products with identifier: 0HN1DQVQ93ODB:00000005 took 303 ms.
+2024-02-14 22:43:19.038 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DQVQ93ODB:00000006 took 722 ms.
+2024-02-14 22:46:53.636 -05:00 [INF] request to: HTTP: PATCH /api/products/{Id} with identifier: 0HN1DQVQ93ODB:00000007 took 34 ms.
+2024-02-14 22:47:07.798 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DQVQ93ODB:00000008 took 370 ms.
+2024-02-14 22:50:09.887 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DR4HOGID7:00000004 took 317 ms.
+2024-02-14 22:50:18.210 -05:00 [INF] request to: HTTP: GET /api/products/{Id} with identifier: 0HN1DR4HOGID7:00000005 took 549 ms.
