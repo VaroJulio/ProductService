@@ -6,14 +6,24 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProductService.Api.Endpoints.ProductEndpoints.Create;
+using ProductService.Api.Processors;
 using ProductService.Infrastructure.Data;
 using ProductService.Infrastructure.Extensions;
 using ProductService.UseCases.Extensions;
 using ProductService.UseCases.Mappers;
+using Serilog;
+using Serilog.Filters;
 using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((ctx, services, config) =>
+{
+    config.ReadFrom.Configuration(ctx.Configuration);
+    config.WriteTo.Logger(c => c.Filter.ByIncludingOnly(Matching.FromSource<LogDurationWatcherPostProcessor>())
+        .WriteTo.File(".logs/logRequestDuration.txt", rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 268435456));
+}, writeToProviders: false);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 const string corsPolicyName = "CorsPolicy";
@@ -122,6 +132,11 @@ app.UseFastEndpoints(c =>
 {
     c.Endpoints.RoutePrefix = "api";
     c.Versioning.Prefix = "version";
+    c.Endpoints.Configurator = ep =>
+    {
+        ep.PreProcessor<InitDurationWatcherPreprocessor>(Order.Before);
+        ep.PostProcessor<LogDurationWatcherPostProcessor>(Order.After);
+    };
 });
 
 app.UseAuthorization();
@@ -138,8 +153,8 @@ try
 }
 catch (Exception ex)
 {
-    var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex, "An error ocurred migrating the DB. {error}", ex.Message);
+    var loggerLog = services.GetRequiredService<ILogger<Program>>();
+    loggerLog.LogError(ex, "An error ocurred migrating the DB. {error}", ex.Message);
 }
 
 var sepatator = new string('#', 59);
