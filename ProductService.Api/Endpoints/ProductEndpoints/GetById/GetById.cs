@@ -17,6 +17,7 @@ namespace ProductService.Api.Endpoints.ProductEndpoints.GetById
         public override void Configure()
         {
             Get(GetByIdProductRequest.Route);
+            AllowAnonymous();
             Options(x => x.WithTags("ProductEndpoints"));
         }
 

@@ -18,6 +18,7 @@ namespace ProductService.Api.Endpoints.ProductEndpoints.Create
         public override void Configure()
         {
             Post(CreateProductRequest.Route);
+            AllowAnonymous();
             Options(x => x.WithTags("ProductEndpoints"));
         }
 

@@ -18,6 +18,7 @@ namespace ProductService.Api.Endpoints.ProductEndpoints.Update
         public override void Configure()
         {
             Patch(UpdateProductRequest.Route);
+            AllowAnonymous();
             Options(x => x.WithTags("ProductEndpoints"));
         }
 
