@@ -20,7 +20,7 @@ builder.Host.UseSerilog((ctx, services, config) =>
 {
     config.ReadFrom.Configuration(ctx.Configuration);
     config.WriteTo.Logger(c => c.Filter.ByIncludingOnly(Matching.FromSource<LogDurationWatcherPostProcessor>())
-        .WriteTo.File(".logs/logRequestDuration.txt", rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 268435456));
+        .WriteTo.File(".logs/logRequestDuration.txt", rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 268435456, shared: true));
 }, writeToProviders: false);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
