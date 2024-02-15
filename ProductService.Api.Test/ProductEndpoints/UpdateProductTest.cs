@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using ProductService.Api.Endpoints.ProductEndpoints.Create;
 using ProductService.Api.Endpoints.ProductEndpoints.Update;
-using ProductService.Domain.ProductAggregate;
 using ProductService.UseCases.Dtos;
 using ProductService.UseCases.Interfaces;
 using ProductService.UseCases.Mappers;

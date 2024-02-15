@@ -17,9 +17,8 @@ namespace ProductService.Infrastructure.Cache
         {
             if (memoryCache.TryGetValue("ProductStatus", out productStatus))
                 memoryCache.Remove("ProductStatus");
-            else
-                productStatus ??= [];
 
+            productStatus = [];             
             productStatus!.Add(0, "Inactive");
             productStatus!.Add(1, "Active");
 
