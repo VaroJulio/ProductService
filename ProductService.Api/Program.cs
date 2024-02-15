@@ -3,7 +3,6 @@ using FastEndpoints;
 using FastEndpoints.ApiExplorer;
 using FastEndpoints.Swagger.Swashbuckle;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProductService.Api.Endpoints.ProductEndpoints.Create;
 using ProductService.Api.Processors;
@@ -14,7 +13,6 @@ using ProductService.UseCases.Mappers;
 using Serilog;
 using Serilog.Filters;
 using System.Reflection;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,50 +56,10 @@ builder.Services.AddFastEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = Assembly.GetExecutingAssembly().GetName().Name, Version = "v1" });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Please enter the token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "bearer"
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
     c.EnableAnnotations();
     c.OperationFilter<FastEndpointsOperationFilter>();
 });
 
-builder.Services
-.AddAuthentication()
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new()
-    {
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true
-    };
-});
-
-builder.Services.AddAuthorizationBuilder();
 builder.Services.Configure<ServiceConfig>(config =>
 {
     config.Services = new List<ServiceDescriptor>(builder.Services);
@@ -139,7 +97,6 @@ app.UseFastEndpoints(c =>
     };
 });
 
-app.UseAuthorization();
 app.MapDefaultControllerRoute();
 
 using var scope = app.Services.CreateScope();
